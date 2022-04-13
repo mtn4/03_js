@@ -1,3 +1,1 @@
-  if (people[i] == "Mary") {
-  //     break;
-  //   }
+ name: 
