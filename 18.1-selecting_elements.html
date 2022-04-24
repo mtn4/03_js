@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Header</h1>
+    <p>Paragraph</p>
+    <a href="#">link</a>
+    <img src="" alt="" />
+    <div class="x">Div with a class</div>
+    <div id="y">Div with an id</div>
+    <input type="text" />
+    <input type="text" />
+    <input type="text" />
+  </body>
+  <script>
+    const p = document.getElementsByTagName("p");
+    const a = document.getElementsByTagName("a");
+    const img = document.getElementsByTagName("img");
+    const div = document.getElementsByTagName("div");
+    const input = document.getElementsByTagName("input");
+    const allElements = document.querySelectorAll("p, a, img, div, input");
+    console.dir(allElements);
+    const p1 = allElements[0];
+    const a1 = allElements[1];
+    const img1 = allElements[2];
+    const div1 = allElements[3];
+    const div2 = allElements[4];
+    const input1 = allElements[5];
+    const input2 = allElements[6];
+    const input3 = allElements[7];
+
+    for (let element of allElements) {
+      console.log(element);
+    }
+    const allinputs = document.querySelectorAll("input");
+    console.dir(allinputs);
+    allinputs.forEach((element) => console.log(element));
+
+    const allinputs2 = document.getElementsByTagName("input");
+    console.dir(allinputs2);
+    const arr = [...allinputs2];
+    arr.forEach((element) => console.log(element));
+  </script>
+</html>

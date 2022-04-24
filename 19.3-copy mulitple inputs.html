@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>19.3-copy multiple inputs</title>
+  </head>
+  <body>
+    <h1>Text to copy:</h1>
+    <p>123456</p>
+    <section>
+      <input type="text" name="first" maxlength="1" />
+      <input type="text" name="second" maxlength="1" />
+      <input type="text" name="third" maxlength="1" />
+      <input type="text" name="fourth" maxlength="1" />
+      <input type="text" name="fifth" maxlength="1" />
+      <input type="text" name="sixth" maxlength="1" />
+      <button>Verify</button>
+    </section>
+  </body>
+  <script>
+    const userInputs = document.querySelectorAll("input");
+
+    userInputs.forEach((input, idx) => {
+      input.addEventListener("paste", (event) => {
+        const txt = event.clipboardData.getData("text");
+        const txtArr = txt.split("");
+        for (let i = 0; i < txtArr.length; i++) {
+          userInputs[idx + i].value = txtArr[i];
+        }
+      });
+
+      input.addEventListener("keyup", () => {
+        if (input.nextElementSibling && input.value) {
+          input.nextElementSibling.focus();
+        }
+      });
+    });
+  </script>
+</html>

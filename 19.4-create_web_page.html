@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    const myBody = document.body;
+    myBody.style.display = "flex";
+    myBody.style.flexDirection = "column";
+    myBody.style.justifyContent = "center";
+    myBody.style.alignItems = "center";
+    myBody.style.backgroundColor = "teal";
+
+    const newH1 = document.createElement("h1");
+    newH1.innerText = "My New Website";
+    newH1.style.color = "blue";
+    newH1.style.paddingTop = "30px";
+    myBody.appendChild(newH1);
+
+    const newH3 = document.createElement("h3");
+    newH3.innerText = "Using Only JS!";
+    newH3.style.color = "cyan";
+    myBody.appendChild(newH3);
+
+    const newGalery = document.createElement("main");
+    newGalery.style.display = "grid";
+    newGalery.style.gridTemplateColumns = "repeat(1,1fr)";
+    newGalery.style.gridGap = "30px";
+
+    const newImg1 = document.createElement("img");
+    newImg1.setAttribute(
+      "src",
+      "https://images.unsplash.com/photo-1650766997920-87fdd2f1efb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=650&q=80"
+    );
+    newGalery.appendChild(newImg1);
+    const newImg2 = document.createElement("img");
+    newImg2.setAttribute(
+      "src",
+      "https://images.unsplash.com/photo-1650806561125-e00fd916bb8c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=650&q=80"
+    );
+    newGalery.appendChild(newImg2);
+
+    myBody.appendChild(newGalery);
+  </script>
+</html>
