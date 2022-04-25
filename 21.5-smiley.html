@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      input {
+        padding-right: 35px;
+      }
+      .smileys {
+        width: 20%;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+      }
+      #error {
+        color: red;
+        visibility: hidden;
+      }
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p>How many smileys do you want to see?</p>
+      <div>
+        <input type="text" />
+        <button>submit</button>
+      </div>
+      <p id="error">Please enter a number</p>
+      <div class="smileys"></div>
+    </main>
+    <script>
+      const numSmileys = document.querySelector("input");
+      const btn = document.querySelector("button");
+      const smileys = document.querySelector(".smileys");
+
+      numSmileys.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          btn.click();
+        }
+      });
+
+      numSmileys.addEventListener("keydown", () => {
+        const deletSmileys = document.querySelectorAll("img");
+        deletSmileys.forEach((el) => {
+          el.remove();
+        });
+      });
+
+      btn.addEventListener("click", () => {
+        let isValidNum = checkInput(numSmileys.value);
+        if (isValidNum) {
+          addSmiley(Math.floor(numSmileys.value));
+        }
+      });
+
+      function checkInput(num) {
+        const errMsg = document.querySelector("#error");
+        if (!isNaN(num)) {
+          errMsg.style.visibility = "hidden";
+          return true;
+        } else {
+          errMsg.style.visibility = "visible";
+          return false;
+        }
+      }
+
+      function addSmiley(num) {
+        for (let i = 0; i < num; i++) {
+          const smiley = document.createElement("img");
+          smiley.src =
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/640px-Smiley.svg.png";
+          smiley.width = "100";
+          smileys.appendChild(smiley);
+        }
+      }
+    </script>
+  </body>
+</html>

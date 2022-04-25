@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      button {
+        padding: 5px;
+      }
+      .text {
+        font-size: 20px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h3>Why are you interested in this position?</h3>
+      <div class="form-group">
+        <textarea name="message" id="message" cols="50" rows="10"></textarea>
+      </div>
+      <button>Click Here!</button>
+      <p class="text"></p>
+    </main>
+    <script>
+      const textArea = document.querySelector("textarea");
+      const txt = document.querySelector(".text");
+      const btn = document.querySelector("button");
+
+      btn.addEventListener("click", () => {
+        if (textArea.value.length < 100) {
+          txt.innerText =
+            "Please enter at least 100 characters before clicking";
+        } else {
+          txt.innerText = "";
+        }
+      });
+    </script>
+  </body>
+</html>

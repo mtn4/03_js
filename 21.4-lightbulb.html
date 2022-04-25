@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img
+        src="https://iheartcraftythings.com/wp-content/uploads/2021/04/Light-Bulb-DRAWING-%E2%80%93-STEP-8.jpg"
+        alt=""
+        width="500"
+      />
+    </main>
+    <script>
+      let picture = document.querySelector("img");
+      picture.addEventListener("click", () => {
+        if (
+          picture.src ==
+          "https://iheartcraftythings.com/wp-content/uploads/2021/04/Light-Bulb-DRAWING-%E2%80%93-STEP-8.jpg"
+        ) {
+          picture.src =
+            "https://thumbs.dreamstime.com/b/yellow-lightbulb-hand-drawn-yellow-lightbulb-white-background-solution-idea-concept-115056227.jpg";
+        } else {
+          picture.src =
+            "https://iheartcraftythings.com/wp-content/uploads/2021/04/Light-Bulb-DRAWING-%E2%80%93-STEP-8.jpg";
+        }
+      });
+    </script>
+  </body>
+</html>

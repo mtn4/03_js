@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        height: 100vh;
+      }
+      button {
+        padding: 10px;
+      }
+      p {
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <p>Press + or - to change my size</p>
+    <div id="buttons">
+      <button id="plus">+</button>
+      <button id="minus">-</button>
+    </div>
+    <script>
+      const btnPlus = document.querySelector("#plus");
+      const btnMinus = document.querySelector("#minus");
+      const p = document.querySelector("p");
+      let fntSize = 20;
+      btnPlus.addEventListener("click", () => {
+        if (fntSize + 10 < 100) {
+          fntSize += 10;
+        } else {
+          fntSize = 100;
+        }
+        p.style.fontSize = `${fntSize}px`;
+      });
+      btnMinus.addEventListener("click", () => {
+        if (fntSize - 10 > 6) {
+          fntSize -= 10;
+        } else {
+          fntSize = 6;
+        }
+        p.style.fontSize = `${fntSize}px`;
+      });
+    </script>
+  </body>
+</html>
