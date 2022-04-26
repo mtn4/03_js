@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Roboto", sans-serif;
+        font-weight: bold;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 50px;
+        gap: 50px;
+      }
+      .chosen-letter {
+        border: 1px solid black;
+        padding: 10px 20px;
+        font-size: 20px;
+      }
+      .msg {
+        font-size: 20px;
+      }
+      .bottom-title {
+        font-size: 24px;
+      }
+      .btn {
+        cursor: pointer;
+        padding: 5px 15px;
+      }
+      .display-none {
+        display: none;
+      }
+      .msg-green {
+        color: green;
+      }
+
+      .msg-red {
+        color: red;
+      }
+      .keys-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .oneKey {
+        padding-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome To Guess My Letter</h1>
+    <div class="chosen-letter">?</div>
+    <p class="msg">Guess a letter</p>
+    <h3 class="bottom-title">Keys guessed</h3>
+    <div class="keys-container"></div>
+    <button class="btn display-none">Yes</button>
+    <script>
+      const strAZ = "abcdefghijklmnopqrstuvwxyz";
+      const lettersArr = [];
+      let chosenLetter = "";
+      let isGameOver = false;
+      const msg = document.querySelector(".msg");
+      const lettersContainer = document.querySelector(".keys-container");
+      const letterBox = document.querySelector(".chosen-letter");
+      const bottomTitle = document.querySelector(".bottom-title");
+      const btn = document.querySelector(".btn");
+      const randomLetter = () => Math.floor(Math.random() * 26);
+      function isValid(keyValue) {
+        const isLetter = /^[a-zA-Z]+$/.test(keyValue);
+        if (isLetter && keyValue.length === 1) {
+          return true;
+        }
+        errMsg(false, false, true, keyValue);
+        return false;
+      }
+      function errMsg(wrongLetter, alreadyGuessed, invalid, keyValue) {
+        msg.classList.add("msg-red");
+        if (wrongLetter) {
+          msg.innerText = "Nope, wrong letter";
+        } else if (alreadyGuessed) {
+          msg.innerText = `${keyValue} has already been guessed!`;
+        } else if (invalid) {
+          msg.innerText = `please enter a valid letter`;
+        }
+      }
+      function isGuessedAlready(keyValue) {
+        if (lettersArr.includes(keyValue)) {
+          errMsg(false, true, false, keyValue);
+          return true;
+        }
+        return false;
+      }
+      function wrongGuess(keyValue) {
+        const wrongLetter = document.createElement("p");
+        wrongLetter.classList.add("oneKey");
+        if (lettersArr.length) {
+          wrongLetter.innerText = `, ${keyValue}`;
+        } else {
+          wrongLetter.innerText = `${keyValue}`;
+        }
+        lettersContainer.appendChild(wrongLetter);
+        lettersArr.push(keyValue);
+      }
+      function rightGuess() {
+        letterBox.innerText = `${chosenLetter}`;
+        msg.classList.remove("msg-red");
+        msg.classList.add("msg-green");
+        msg.innerText = "Right letter!";
+        bottomTitle.innerText = "Would you like to play again?";
+        lettersContainer.style.display = "none";
+        btn.classList.remove("display-none");
+        isGameOver = true;
+      }
+      function resetGame() {
+        lettersContainer.style.display = "flex";
+        letterBox.innerText = `?`;
+        msg.classList.remove("msg-green");
+        msg.innerText = "Guess a letter";
+        bottomTitle.innerText = "Keys guessed";
+        lettersContainer.classList.remove("display-none");
+        btn.classList.add("display-none");
+        const keysReset = document.querySelectorAll(".oneKey");
+        keysReset.forEach((letter) => {
+          lettersContainer.removeChild(letter);
+        });
+        while (lettersArr.length) {
+          lettersArr.pop();
+        }
+
+        chosenLetter = strAZ[randomLetter()];
+        isGameOver = false;
+      }
+      chosenLetter = strAZ[randomLetter()];
+
+      window.addEventListener("keypress", (e) => {
+        if (!isGameOver) {
+          const isValidLetter = isValid(e.key);
+          if (isValidLetter) {
+            const userGuess = e.key.toLowerCase();
+            if (!isGuessedAlready(userGuess)) {
+              if (userGuess === chosenLetter) {
+                rightGuess();
+              } else {
+                errMsg(true, false, false, userGuess);
+                wrongGuess(userGuess);
+              }
+            }
+          }
+        }
+      });
+      btn.addEventListener("click", (e) => {
+        resetGame();
+      });
+    </script>
+  </body>
+</html>
