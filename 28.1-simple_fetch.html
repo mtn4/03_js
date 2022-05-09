@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="joke">Joke of the Day</button>
+    <div id="output"></div>
+  </body>
+  <script>
+    const joke = document.getElementById("joke");
+    const output = document.getElementById("output");
+    joke.addEventListener("click", addJokes);
+    function addJokes() {
+      fetch("https://api.jokes.one/jod")
+        .then((res) => res.json())
+        .then((data) => {
+          const titleElem = document.createElement("h4");
+          const textElem = document.createElement("p");
+          const title = data.contents.jokes[0].joke.title;
+          const text = data.contents.jokes[0].joke.text;
+          titleElem.innerText = title;
+          textElem.innerText = text;
+          output.appendChild(titleElem);
+          output.appendChild(textElem);
+        })
+        .catch((err) => console.log("Error!", err));
+    }
+  </script>
+</html>
