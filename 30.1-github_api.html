@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Github API</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        background: rgb(2, 0, 36);
+        background: radial-gradient(
+          circle,
+          rgba(2, 0, 36, 1) 0%,
+          rgba(9, 117, 121, 1) 100%
+        );
+      }
+      form {
+        width: fit-content;
+        margin: auto;
+        font-family: sans-serif;
+      }
+      input {
+        width: 300px;
+        height: 30px;
+      }
+      button {
+        margin-top: 20px;
+        height: 30px;
+        width: 80px;
+      }
+      .error {
+        margin-top: 5px;
+        color: red;
+        text-align: center;
+      }
+      .cards-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 70%;
+        margin: auto;
+      }
+      .card img {
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <div>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Github Username"
+          autofocus
+        />
+        <button>Search</button>
+      </div>
+      <div class="error"></div>
+    </form>
+    <div class="cards-container"></div>
+  </body>
+  <script>
+    const url = `https://api.github.com/users/`;
+    const btn = document.querySelector("button");
+    const usernameInput = document.querySelector("input");
+    const errorMessage = document.querySelector(".error");
+    const usersObj = {};
+    const cardsContainer = document.querySelector(".cards-container");
+
+    const focusOnInput = () => {
+      usernameInput.focus();
+    };
+
+    const errorHandler = (error) => {
+      errorMessage.textContent = error;
+      setTimeout(() => {
+        errorMessage.textContent = "";
+      }, 2500);
+    };
+
+    const addCard = (userInformation) => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.innerHTML = `
+  <a class="card-link" href=${userInformation.link} target="_blank">
+    <div class="img-container">
+      <img src="${userInformation.image}" alt="user image" />
+    </div>
+    <div class="information-container">
+      <h3>${userInformation.usernameInput}</h3>
+      <h2>${userInformation.name}</h2>
+      <div>Number of public Repos: ${userInformation.repository}</div>
+      <a href=${userInformation.link} target="_blank">Click to the profile</a>
+    </div>
+  </a>`;
+      cardsContainer.prepend(card);
+    };
+
+    const fetchUser = async (event) => {
+      event.preventDefault();
+      errorMessage.textContent = "";
+      if (usersObj[usernameInput.value]) {
+        errorHandler("The Github data already display on the page");
+      } else {
+        try {
+          const response = await fetch(`${url}${usernameInput.value}`);
+          const data = await response.json();
+          if (response.ok) {
+            usersObj[usernameInput.value] = {
+              usernameInput: data.login,
+              name: data.name,
+              image: data.avatar_url,
+              repository: data.public_repos,
+              link: data.html_url,
+            };
+            addCard(usersObj[usernameInput.value]);
+          } else {
+            errorHandler(`${usernameInput.value} ${data.message}`);
+          }
+        } catch (error) {
+          errorHandler(error);
+        }
+      }
+      focusOnInput();
+      usernameInput.value = "";
+    };
+
+    btn.addEventListener("click", fetchUser);
+  </script>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Star Wars App</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        color: black;
+      }
+      body {
+        height: 100vh;
+        background: rgb(2, 0, 36);
+        background: radial-gradient(
+          circle,
+          rgba(2, 0, 36, 1) 0%,
+          rgba(9, 117, 121, 1) 100%
+        );
+      }
+      table {
+        width: fit-content;
+        margin: auto;
+        font-family: sans-serif;
+      }
+      td {
+        text-align: center;
+        padding: 5px;
+      }
+      th {
+        text-align: center;
+        background: #80b327;
+        color: #fefefe;
+        font-size: 1.5rem;
+      }
+      tr {
+        color: #333333;
+      }
+
+      tr:nth-child(odd) {
+        background: #e1f5b7;
+      }
+
+      tr:nth-child(even) {
+        background: #edf9d2;
+      }
+    </style>
+  </head>
+  <body></body>
+  <script>
+    const fetchFilm = async (url) => {
+      const response = await fetch(url);
+      const data = await response.json();
+      for (let i = 0; i < 10; i++) {
+        fetchCharacter(data.characters[i]);
+      }
+    };
+    const fetchCharacter = async (url) => {
+      const response = await fetch(url);
+      const data = await response.json();
+      const characterProperties = {};
+      characterProperties.name = data.name;
+      characterProperties.hair = data.hair_color;
+      characterProperties.height = data.height;
+      fetchPlanet(characterProperties, data.homeworld);
+    };
+    const fetchPlanet = async (characterProperties, url) => {
+      const response = await fetch(url);
+      const data = await response.json();
+      characterProperties.planetName = data.name;
+      characterProperties.planetPopulation = data.population;
+      appendCharacterToTable(characterProperties);
+    };
+    const appendCharacterToTable = (characterProperties) => {
+      const tbody = document.querySelector("tbody");
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+      <td>${characterProperties.name}</td>
+      <td>${characterProperties.hair}</td>
+      <td>${characterProperties.height}</td>
+      <td>${characterProperties.planetName}</td>
+      <td>${characterProperties.planetPopulation}</td>
+  `;
+      tbody.appendChild(tr);
+    };
+    const createTable = () => {
+      const table = document.createElement("table");
+      table.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th colspan="5">Star Wars</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>name</td>
+          <td>hair</td>
+          <td>height</td>
+          <td>planet name</td>
+          <td>planet population</td>
+        </tr>
+      </tbody>
+    </table>
+`;
+      document.body.appendChild(table);
+    };
+    const url = "https://swapi.dev/api/films/1/";
+    createTable();
+    fetchFilm(url);
+  </script>
+</html>
